@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/token/sample")
 public class SampleRestApi {
     
+    @RequestMapping(value = "/anonymouse", method = RequestMethod.GET)
+    @ResponseBody
+    public String sayAnonymous() {
+        return "Hello Anonymouse";
+    }
+    
     @RequestMapping(value = "/helloworld", method = RequestMethod.GET)
     @ResponseBody
     public String sayHelloWorld() {

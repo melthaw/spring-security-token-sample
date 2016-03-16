@@ -7,6 +7,7 @@ import java.util.UUID;
 import in.clouthink.daas.security.token.sample.cust.SampleRole;
 import in.clouthink.daas.security.token.sample.cust.SampleUser;
 import in.clouthink.daas.security.token.sample.cust.SampleUserRepository;
+import in.clouthink.daas.security.token.spi.KeyGeneratorFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class ApplicationStartupCallback implements
         if (sampleUser == null) {
             sampleUser = new SampleUser();
             sampleUser.setUsername("sampleUser");
-            String salt = UUID.randomUUID().toString().replace("-", "");
+            String salt = KeyGeneratorFactory.getInstance().generateHexKey();
             String password = provider.getPasswordDigester("MD5")
                                       .encode("samplePwd", salt);
             sampleUser.setPassword(password);
