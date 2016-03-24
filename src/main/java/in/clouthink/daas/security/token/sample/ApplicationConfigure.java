@@ -72,7 +72,8 @@ public class ApplicationConfigure {
     
     @Value("${memcached.port}")
     private int memcachedPort;
-    
+
+    @Primary
     @Bean
     public TokenProvider tokenProvider1() {
         // return new TokenProviderMemcachedImpl();
@@ -89,7 +90,7 @@ public class ApplicationConfigure {
         // return new TokenProviderMemoryImpl();
     }
     
-    @Primary
+//    @Primary
     @Bean
     public TokenProvider compositeTokenProvider() {
         return new CompositeTokenProvider(tokenProvider1(), tokenProvider2());
@@ -168,7 +169,7 @@ public class ApplicationConfigure {
             public void configure(TokenLifeSupport tokenLifeSupport) {
                 tokenLifeSupport.setTokenTimeout(60 * 60 * 1000);
                 tokenLifeSupport.setRefreshTokenInteval(3 * 60 * 1000);
-                tokenLifeSupport.disableMultiTokens();
+//                tokenLifeSupport.disableMultiTokens();
             }
             
             @Override
