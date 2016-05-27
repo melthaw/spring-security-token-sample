@@ -28,7 +28,7 @@ public class SampleRestApiClient {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(bodyMap,
                                                                                                           headers);
         
-        Map result = new RestTemplate().postForObject("http://127.0.0.1/login",
+        Map result = new RestTemplate().postForObject("http://127.0.0.1:8080/login",
                                                       request,
                                                       Map.class);
         
@@ -47,7 +47,7 @@ public class SampleRestApiClient {
 
         HttpEntity request = new HttpEntity(headers);
 
-        ResponseEntity<String> result = new RestTemplate().exchange("http://127.0.0.1/token/sample/anonymouse",
+        ResponseEntity<String> result = new RestTemplate().exchange("http://127.0.0.1:8080/token/sample/anonymouse",
                                                                     HttpMethod.GET,
                                                                     request,
                                                                     String.class);
@@ -66,7 +66,7 @@ public class SampleRestApiClient {
 
         HttpEntity request = new HttpEntity(headers);
 
-        ResponseEntity<String> result = new RestTemplate().exchange("http://127.0.0.1/token/noauth",
+        ResponseEntity<String> result = new RestTemplate().exchange("http://127.0.0.1:8080/token/noauth",
                                                                     HttpMethod.GET,
                                                                     request,
                                                                     String.class);
@@ -86,7 +86,7 @@ public class SampleRestApiClient {
         
         HttpEntity request = new HttpEntity(headers);
         
-        ResponseEntity<String> result = new RestTemplate().exchange("http://127.0.0.1/token/sample/helloworld",
+        ResponseEntity<String> result = new RestTemplate().exchange("http://127.0.0.1:8080/token/sample/helloworld",
                                                                     HttpMethod.GET,
                                                                     request,
                                                                     String.class);
