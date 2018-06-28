@@ -1,8 +1,7 @@
-package in.clouthink.daas.security.token.sample.test;
+package in.clouthink.daas.security.token.sample.test.controller;
 
 import in.clouthink.daas.security.token.repackage.org.springframework.security.crypto.codec.Base64;
-import in.clouthink.daas.security.token.spi.KeyGeneratorFactory;
-import in.clouthink.daas.security.token.spi.PasswordDigesterProviderFactory;
+import in.clouthink.daas.security.token.sample.test.common.AbstractTest;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -13,27 +12,27 @@ import java.util.Map;
 
 /**
  */
-public class SampleRestApiClient {
-    
+public class AuthzTest extends AbstractTest {
+
     static String token;
-    
+
     public static String testLogin() {
         MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
         bodyMap.add("username", "sampleUser");
         bodyMap.add("password", "samplePwd");
-        
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        
+
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(bodyMap,
                                                                                                           headers);
-        
+
         Map result = new RestTemplate().postForObject("http://127.0.0.1:8080/login",
                                                       request,
                                                       Map.class);
-        
+
         System.out.println(result);
-        
+
         return (String) ((Map) result.get("data")).get("token");
     }
 
@@ -83,9 +82,9 @@ public class SampleRestApiClient {
                                        "UTF-8");
             headers.set("Authorization", "Bearer " + bearer);
         }
-        
+
         HttpEntity request = new HttpEntity(headers);
-        
+
         ResponseEntity<String> result = new RestTemplate().exchange("http://127.0.0.1:8080/token/sample/helloworld",
                                                                     HttpMethod.GET,
                                                                     request,
@@ -94,15 +93,15 @@ public class SampleRestApiClient {
             throw new RuntimeException(result.getBody());
         }
     }
-    
+
     public static void main(String[] args) throws Exception {
 //        testAnonymouse();
-        testNoAuth();
+//        testNoAuth();
         token = testLogin();
-        testNoAuth();
+//        testNoAuth();
 //        testHelloWorld();
 //        testLogin();
-//        testHelloWorld();
+        testHelloWorld();
 //        long totalTime = 0;
 //        for (int i = 0; i < 1000; i++) {
 //            long currentTimeMillis = System.currentTimeMillis();
@@ -112,7 +111,7 @@ public class SampleRestApiClient {
 //        }
 //        System.out.println("Total:" + totalTime);
 //        System.out.println("Average:" + totalTime / 10000);
-        
+
         // System.out.println(PasswordDigesterProviderFactory.getInstance()
         // .getPasswordDigester("MD5"));
         //

@@ -1,0 +1,16 @@
+spring:
+  mvc:
+    date-format: yyyy-MM-dd
+    favicon:
+      enabled: false
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.sss'Z'
+    serialization:
+      write-dates-as-timestamps: true
+  profiles:
+    active: production

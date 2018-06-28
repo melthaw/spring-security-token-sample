@@ -1,61 +1,57 @@
-package in.clouthink.daas.security.token.sample.test.kick;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.util.Map;
-
-import org.springframework.http.*;
-import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.*;
+package in.clouthink.daas.security.token.sample.test.controller;
 
 import in.clouthink.daas.security.token.repackage.org.springframework.security.crypto.codec.Base64;
+import in.clouthink.daas.security.token.sample.test.common.AbstractTest;
+import org.junit.Test;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestTemplate;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.util.FileCopyUtils;
+import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 /**
  */
-public class SampleRestApiClient {
-    
+public class AuthnTest extends AbstractTest {
+
     String token;
-    
+
+    @Test
+    public void testCrud() throws Exception {
+        testLogin();
+    }
+
     public String testLogin() {
         MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
         bodyMap.add("username", "sampleUser");
-        bodyMap.add("password", "samplePwd");
-        
+        bodyMap.add("password", "samplePwd1");
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        
+
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(bodyMap,
                                                                                                           headers);
-                                                                                                          
-        Map result = new RestTemplate().postForObject("http://127.0.0.1/login",
+
+        Map result = new RestTemplate().postForObject("http://127.0.0.1:8080/login",
                                                       request,
                                                       Map.class);
-                                                      
+
         System.out.println(result);
-        
+
         token = (String) ((Map) result.get("data")).get("token");
         return token;
     }
-    
+
     public void testHelloWorld() throws UnsupportedEncodingException {
         HttpHeaders headers = new HttpHeaders();
         String bearer = new String(Base64.encode(token.getBytes("UTF-8")),
                                    "UTF-8");
         headers.set("Authorization", "Bearer " + bearer);
-        
+
         HttpEntity request = new HttpEntity(headers);
-        
+
         RestTemplate restTemplate = new RestTemplate();
 //        restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
 //
@@ -109,8 +105,8 @@ public class SampleRestApiClient {
 //                return contentType != null ? contentType.getCharSet() : null;
 //            }
 //        });
-        
-        ResponseEntity<String> result = restTemplate.exchange("http://127.0.0.1/token/sample/helloworld",
+
+        ResponseEntity<String> result = restTemplate.exchange("http://127.0.0.1:8080/token/sample/helloworld",
                                                               HttpMethod.GET,
                                                               request,
                                                               String.class);
@@ -119,43 +115,43 @@ public class SampleRestApiClient {
             throw new RuntimeException(result.getBody());
         }
     }
-    
-    public static void main(String[] args) throws Exception {
-        SampleRestApiClient clientA = new SampleRestApiClient();
-        clientA.testLogin();
-        
-        SampleRestApiClient clientB = new SampleRestApiClient();
-        clientB.testLogin();
-        
-        SampleRestApiClient clientC = new SampleRestApiClient();
-        clientC.testLogin();
-        
-        SampleRestApiClient clientD = new SampleRestApiClient();
-        clientD.testLogin();
-        
-        try {
-            clientA.testHelloWorld();
-        }
-        catch (HttpStatusCodeException e) {
-             System.out.println(e.getResponseBodyAsString());
-        }
-        try {
-            clientB.testHelloWorld();
-        }
-        catch (HttpStatusCodeException e) {
-             System.out.println(e.getResponseBodyAsString());
-        }
-        try {
-            clientC.testHelloWorld();
-        }
-        catch (HttpStatusCodeException e) {
-             System.out.println(e.getResponseBodyAsString());
-        }
-        try {
-            clientD.testHelloWorld();
-        }
-        catch (HttpStatusCodeException e) {
-             System.out.println(e.getResponseBodyAsString());
-        }
-    }
+
+//    public static void main(String[] args) throws Exception {
+//        AuthnTest clientA = new AuthnTest();
+//        clientA.testLogin();
+//
+//        AuthnTest clientB = new AuthnTest();
+//        clientB.testLogin();
+//
+//        AuthnTest clientC = new AuthnTest();
+//        clientC.testLogin();
+//
+//        AuthnTest clientD = new AuthnTest();
+//        clientD.testLogin();
+//
+//        try {
+//            clientA.testHelloWorld();
+//        }
+//        catch (HttpStatusCodeException e) {
+//             System.out.println(e.getResponseBodyAsString());
+//        }
+//        try {
+//            clientB.testHelloWorld();
+//        }
+//        catch (HttpStatusCodeException e) {
+//             System.out.println(e.getResponseBodyAsString());
+//        }
+//        try {
+//            clientC.testHelloWorld();
+//        }
+//        catch (HttpStatusCodeException e) {
+//             System.out.println(e.getResponseBodyAsString());
+//        }
+//        try {
+//            clientD.testHelloWorld();
+//        }
+//        catch (HttpStatusCodeException e) {
+//             System.out.println(e.getResponseBodyAsString());
+//        }
+//    }
 }

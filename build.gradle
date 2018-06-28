@@ -1,0 +1,76 @@
+apply from: "gradle/dependencies.gradle"
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14.1'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE"
+    }
+}
+
+allprojects {
+
+    apply plugin: 'java'
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+
+    repositories {
+        mavenCentral()
+    }
+
+}
+
+repositories {
+
+    mavenCentral()
+
+    maven {
+        url 'https://repo.spring.io/libs-snapshot'
+    }
+}
+
+apply plugin: 'org.springframework.boot'
+
+springBoot {
+    excludeDevtools = false
+}
+
+jar {
+    baseName = project['artifactId']
+    version = project['version']
+}
+
+task sourcesJar(type: Jar) {
+    baseName = project['artifactId']
+    version = project['version']
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+dependencies {
+    compile("in.clouthink.daas:daas-token:1.7.0")
+
+    compile("com.google.guava:guava:18.0")
+
+    compile("org.springframework.boot:spring-boot-devtools:1.5.10.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter:1.5.10.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb:1.5.10.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-web:1.5.10.RELEASE")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test:1.5.10.RELEASE")
+}
+
+bootRun {
+    if (project.hasProperty('jvmArgs')) {
+        jvmArgs project.jvmArgs.split('\\s+')
+    }
+}

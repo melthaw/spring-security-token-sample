@@ -2,8 +2,6 @@ package in.clouthink.daas.security.token.sample.cust;
 
 import in.clouthink.daas.security.token.core.Role;
 
-/**
- */
 public class SampleRole implements Role {
     
     private String name;
