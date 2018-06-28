@@ -1,6 +1,6 @@
 # Overview
 
-The sample to show how to use the [spring-security-token](https://github.com/melthaw/spring-security-token)*[]: 
+The sample to show how to use the [spring-security-token](https://github.com/melthaw/spring-security-token)
 
 
 # Prerequisite
