@@ -1,4 +1,4 @@
-package in.clouthink.daas.security.token.sample.cust;
+package in.clouthink.daas.security.token.sample.spi.impl;
 
 import in.clouthink.daas.security.token.core.Role;
 import in.clouthink.daas.security.token.core.User;

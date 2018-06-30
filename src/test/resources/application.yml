@@ -14,3 +14,13 @@ spring:
       write-dates-as-timestamps: true
   profiles:
     active: production
+  data:
+    mongodb:
+      uri: mongodb://${MONGODB_HOST:localhost}:${MONGODB_PORT:27017}/ssts
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+
+security:
+  basic:
+    enabled: false

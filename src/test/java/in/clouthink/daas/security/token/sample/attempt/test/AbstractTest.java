@@ -1,16 +1,15 @@
-package in.clouthink.daas.security.token.sample.test.common;
+package in.clouthink.daas.security.token.sample.attempt.test;
 
-import in.clouthink.daas.security.token.sample.SampleApplication;
-import in.clouthink.daas.security.token.sample.cust.SampleRole;
-import in.clouthink.daas.security.token.sample.cust.SampleUser;
-import in.clouthink.daas.security.token.sample.cust.SampleUserRepository;
+import in.clouthink.daas.security.token.sample.attempt.LoginAttemptSampleApplication;
+import in.clouthink.daas.security.token.sample.spi.impl.SampleRole;
+import in.clouthink.daas.security.token.sample.spi.impl.SampleUser;
+import in.clouthink.daas.security.token.sample.spi.impl.SampleUserRepository;
 import in.clouthink.daas.security.token.spi.KeyGeneratorFactory;
 import in.clouthink.daas.security.token.spi.PasswordDigesterProvider;
 import in.clouthink.daas.security.token.spi.impl.DefaultPasswordDigesterProvider;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = SampleApplication.class)
+@SpringBootTest(classes = LoginAttemptSampleApplication.class)
 @ActiveProfiles(profiles = "test")
 public abstract class AbstractTest {
 

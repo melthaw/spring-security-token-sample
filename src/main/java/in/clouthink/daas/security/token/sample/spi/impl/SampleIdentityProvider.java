@@ -1,10 +1,10 @@
-package in.clouthink.daas.security.token.sample.cust;
+package in.clouthink.daas.security.token.sample.spi.impl;
 
 import in.clouthink.daas.security.token.exception.UserNotFoundException;
 import in.clouthink.daas.security.token.spi.IdentityProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class IdentitySampleProvider implements IdentityProvider<SampleUser> {
+public class SampleIdentityProvider implements IdentityProvider<SampleUser> {
 
     @Autowired
     private SampleUserRepository sampleUserRepository;

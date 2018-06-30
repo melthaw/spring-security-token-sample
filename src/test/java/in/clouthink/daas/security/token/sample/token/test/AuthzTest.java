@@ -1,7 +1,8 @@
-package in.clouthink.daas.security.token.sample.test.controller;
+package in.clouthink.daas.security.token.sample.token.test;
 
 import in.clouthink.daas.security.token.repackage.org.springframework.security.crypto.codec.Base64;
-import in.clouthink.daas.security.token.sample.test.common.AbstractTest;
+import in.clouthink.daas.security.token.sample.attempt.test.AbstractTest;
+import org.junit.Test;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -15,6 +16,11 @@ import java.util.Map;
 public class AuthzTest extends AbstractTest {
 
     static String token;
+
+    @Test
+    public void testCrud() throws Exception {
+        testLogin();
+    }
 
     public static String testLogin() {
         MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();

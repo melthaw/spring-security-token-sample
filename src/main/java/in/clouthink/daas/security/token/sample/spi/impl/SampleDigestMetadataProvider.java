@@ -1,9 +1,8 @@
-package in.clouthink.daas.security.token.sample.cust;
+package in.clouthink.daas.security.token.sample.spi.impl;
 
 import in.clouthink.daas.security.token.spi.DigestMetadataProvider;
 
-public class DigestMetadataSampleProvider implements
-        DigestMetadataProvider<SampleUser> {
+public class SampleDigestMetadataProvider implements DigestMetadataProvider<SampleUser> {
 
     @Override
     public String getDigestAlgorithm(SampleUser user) {

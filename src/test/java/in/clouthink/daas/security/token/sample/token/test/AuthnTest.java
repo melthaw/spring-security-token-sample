@@ -1,12 +1,10 @@
-package in.clouthink.daas.security.token.sample.test.controller;
+package in.clouthink.daas.security.token.sample.token.test;
 
 import in.clouthink.daas.security.token.repackage.org.springframework.security.crypto.codec.Base64;
-import in.clouthink.daas.security.token.sample.test.common.AbstractTest;
 import org.junit.Test;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
@@ -14,7 +12,7 @@ import java.util.Map;
 
 /**
  */
-public class AuthnTest extends AbstractTest {
+public class AuthnTest extends in.clouthink.daas.security.token.sample.attempt.test.AbstractTest {
 
     String token;
 
