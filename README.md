@@ -9,7 +9,7 @@ Before start, please make sure the Mongodb & Redis are installed and started on 
 
 Here is the way to quick start the mongodb & redis if you are using docker.
 
-```
+```sh
 docker-compose -f docker-compose.env.yml up -d
 ```
 
@@ -25,7 +25,7 @@ gradle clean build -x test
 or 
 
 ```sh
-gradlew clean build -x test
+./gradlew clean build -x test
 ```
 
 > remember pass `-x test` if you only want verify the source code compilation.
@@ -34,59 +34,79 @@ gradlew clean build -x test
 
 The spring-security-token backend depends on outside server before it gets started.
 
-* db
-* db_seed
-
+* mongodb
+* redis
+* ...
 
 So please remember start the required db before test.
 
-```
- docker-compose -f docker-compose.test.yml up
+```sh
+docker-compose -f docker-compose.test.yml up
 ```
 
 Finally start the test.
 
-
-```
+```sh
 gradle clean test
 ```
 
 or 
 
-```
-gradlew clean test
+```sh
+./gradlew clean test
 ```
 
+### Test Mode
+
+> Refz: https://thepracticaldeveloper.com/2017/07/31/guide-spring-boot-controller-tests/
+
+There are different test modes available for spring boot.
+
+* Server-Side Tests
+    * Inside-Server Tests
+        * Strategy 1: MockMVC in Standalone Mode
+        * Strategy 2: MockMVC with WebApplicationContext
+    * Outside-Server Tests
+        * Strategy 3: SpringBootTest with a MOCK WebEnvironment value
+        * Strategy 4: SpringBootTest with a Real Web Server
+
+We choose `Strategy 4: SpringBootTest with a Real Web Server` to test our sample application.
+
+```java
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles(profiles = "test")
+public abstract class AbstractTest {
+
+}
+```
 
 ## How to debug the project in IDE ?
 
-The spring-security-token backend depends on outside server before it gets started.
+The spring-security-token backend depends on outside service before it gets started.
 
-* db
-* db_seed
+* mongodb
+* redis
 * ...
 
-So please remember start the required db before debug.
+So please remember start the required service before debug.
 
+```sh
+docker-compose -f docker-compose.test.yml up
 ```
-docker-compose -f docker-compose.dev.yml up
-```
-
 
 Add new Gradle configuration in IDE , and run it in debug mode.
 
 > The configuration should match the following CMDs.
 
-```
-cd mes/server
+```sh
 gradle clean bootRun -PjvmArgs="-Dspring.profiles.active=development"
 ```
 
 or
  
-```
-cd mes/server
-../../gradlew clean bootRun -PjvmArgs="-Dspring.profiles.active=development"
+```sh
+./gradlew clean bootRun -PjvmArgs="-Dspring.profiles.active=development"
 ```
 
 # Appendix - Spring Profile
@@ -108,44 +128,28 @@ To pass the options `-Dspring.profiles.active=<profile-name>` to JVM , for examp
 
 * for Development
 
-```
+```sh
 gradle clean bootRun -PjvmArgs="-Dspring.profiles.active=development"
 ```
 
 
 * for Test
 
-```
+```sh
 gradle clean test 
 ```
 
 or
 
-```
+```sh
 gradle clean test -PjvmArgs="-Dspring.profiles.active=test" 
 ```
 
 > The `-Dspring.profiles.active=test` is not mandatory, since we have specified the active profile in Test class
 >
-> ```
+> ```java
 >   @ActiveProfiles(profiles = "test")
 >   public abstract class AbstractTest { }
 > ```
-
-
-* for Production
-
-```sh
-java -jar server-1.0.0-SNAPSHOT.jar 
-```
-
-or
-
-```sh
-java -jar server-1.0.0-SNAPSHOT.jar -Dspring.profiles.active=production 
-```
-
-
-
 
 
