@@ -10,7 +10,7 @@ Before start, please make sure the Mongodb & Redis are installed and started on 
 Here is the way to quick start the mongodb & redis if you are using docker.
 
 ```sh
-docker-compose -f docker-compose.env.yml up -d
+docker-compose -f docker-compose.test.yml up -d
 ```
 
 # Get Started
