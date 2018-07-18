@@ -1,11 +1,9 @@
 package in.clouthink.daas.security.token.sample.token.test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import in.clouthink.daas.security.token.repackage.org.springframework.security.crypto.codec.Base64;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -14,13 +12,8 @@ import org.springframework.util.MultiValueMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 public class AuthnAndAuthzTest extends AbstractTest {
-
-    protected JacksonTester jacksonTester;
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -28,8 +21,6 @@ public class AuthnAndAuthzTest extends AbstractTest {
     @Before
     public void setup() {
         super.setUp();
-        // Initializes the JacksonTester
-        JacksonTester.initFields(this, new ObjectMapper());
     }
 
     @Test

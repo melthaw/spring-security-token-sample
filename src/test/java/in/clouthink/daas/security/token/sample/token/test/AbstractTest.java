@@ -24,9 +24,6 @@ import java.util.List;
 public abstract class AbstractTest {
 
     @Autowired
-    protected WebApplicationContext webApplicationContext;
-
-    @Autowired
     protected SampleUserRepository sampleUserRepository;
 
     private PasswordDigesterProvider provider = new DefaultPasswordDigesterProvider();
