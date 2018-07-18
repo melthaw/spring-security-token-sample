@@ -3,24 +3,23 @@ package in.clouthink.daas.security.token.sample.token.test;
 import in.clouthink.daas.security.token.sample.spi.impl.SampleRole;
 import in.clouthink.daas.security.token.sample.spi.impl.SampleUser;
 import in.clouthink.daas.security.token.sample.spi.impl.SampleUserRepository;
-import in.clouthink.daas.security.token.sample.token.TokenSampleApplication;
 import in.clouthink.daas.security.token.spi.KeyGeneratorFactory;
 import in.clouthink.daas.security.token.spi.PasswordDigesterProvider;
 import in.clouthink.daas.security.token.spi.impl.DefaultPasswordDigesterProvider;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = TokenSampleApplication.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = "test")
 public abstract class AbstractTest {
 
@@ -32,11 +31,8 @@ public abstract class AbstractTest {
 
     private PasswordDigesterProvider provider = new DefaultPasswordDigesterProvider();
 
-    protected MockMvc mvc;
-
+    @Before
     public void setUp() {
-        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-
         // prepare user
         SampleUser sampleUser = sampleUserRepository.findByUsername("sampleUser");
         if (sampleUser == null) {
@@ -56,6 +52,7 @@ public abstract class AbstractTest {
         }
     }
 
+    @After
     public void tearDown() {
         // clean up user
         SampleUser sampleUser = sampleUserRepository.findByUsername("sampleUser");
@@ -63,4 +60,5 @@ public abstract class AbstractTest {
             sampleUserRepository.delete(sampleUser);
         }
     }
+
 }
