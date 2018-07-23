@@ -66,6 +66,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:1.5.14.RELEASE")
 
     testCompile("org.springframework.boot:spring-boot-starter-test:1.5.14.RELEASE")
+    testCompile("io.rest-assured:rest-assured:3.1.0")
+    testCompile("io.rest-assured:spring-mock-mvc:3.1.0")
+    testCompile("org.assertj:assertj-core:3.10.0")
+
 }
 
 bootRun {

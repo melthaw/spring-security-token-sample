@@ -5,12 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.*;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import org.springframework.http.HttpStatus;
 
-import java.util.Map;
-
+import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AuthnAndAuthzTest extends AbstractTest {
@@ -25,36 +22,28 @@ public class AuthnAndAuthzTest extends AbstractTest {
 
     @Test
     public void testLoginAndAccess() throws Exception {
-        MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
-        bodyMap.add("username", "sampleUser");
-        bodyMap.add("password", "samplePwd");
+        String token = given()
+                .param("username", "sampleUser")
+                .param("password", "samplePwd")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .when()
+                .post("/login")
+                .jsonPath()
+                .get("data.token");
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        assertThat(token).isNotBlank();
 
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(bodyMap,
-                                                                                                          headers);
+        String helloWorldResponseAsString = given()
+                .header("Authorization", "Bearer " + new String(Base64.encode(token.getBytes("UTF-8")),
+                                                                "UTF-8"))
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .when()
+                .get("/token/auth/helloworld")
+                .asString();
 
-        ResponseEntity<Map> loginResponse = restTemplate.postForEntity("/login",
-                                                                       request,
-                                                                       Map.class);
-        assertThat(loginResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        String token = (String) ((Map) loginResponse.getBody().get("data")).get("token");
-        assertThat(token).isNotNull();
-
-        headers = new HttpHeaders();
-        String bearer = new String(Base64.encode(token.getBytes("UTF-8")),
-                                   "UTF-8");
-        headers.set("Authorization", "Bearer " + bearer);
-        request = new HttpEntity(headers);
-
-        ResponseEntity<String> getHelloWorldResponse = restTemplate.exchange("/token/auth/helloworld",
-                                                                             HttpMethod.GET,
-                                                                             request,
-                                                                             String.class);
-
-        assertThat(getHelloWorldResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(getHelloWorldResponse.getBody().equals("Hello World"));
+        assertThat(helloWorldResponseAsString).isEqualTo("Hello World");
     }
 
 }
