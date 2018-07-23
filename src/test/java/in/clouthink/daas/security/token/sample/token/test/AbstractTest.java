@@ -7,7 +7,6 @@ import in.clouthink.daas.security.token.spi.KeyGeneratorFactory;
 import in.clouthink.daas.security.token.spi.PasswordDigesterProvider;
 import in.clouthink.daas.security.token.spi.impl.DefaultPasswordDigesterProvider;
 import io.restassured.RestAssured;
-import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +34,6 @@ public abstract class AbstractTest {
 
     @Before
     public void setUp() {
-//        RestAssuredMockMvc.standaloneSetup();
         RestAssured.port = this.port;
 
         // prepare user

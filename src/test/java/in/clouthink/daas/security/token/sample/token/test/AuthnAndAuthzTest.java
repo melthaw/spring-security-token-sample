@@ -3,17 +3,12 @@ package in.clouthink.daas.security.token.sample.token.test;
 import in.clouthink.daas.security.token.repackage.org.springframework.security.crypto.codec.Base64;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AuthnAndAuthzTest extends AbstractTest {
-
-    @Autowired
-    private TestRestTemplate restTemplate;
 
     @Before
     public void setup() {
