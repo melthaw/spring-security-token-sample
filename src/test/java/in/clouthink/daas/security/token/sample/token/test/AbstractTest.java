@@ -7,6 +7,7 @@ import in.clouthink.daas.security.token.spi.KeyGeneratorFactory;
 import in.clouthink.daas.security.token.spi.PasswordDigesterProvider;
 import in.clouthink.daas.security.token.spi.impl.DefaultPasswordDigesterProvider;
 import io.restassured.RestAssured;
+import io.restassured.parsing.Parser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class AuthnAndAuthzTest extends AbstractTest {
 
@@ -29,16 +30,16 @@ public class AuthnAndAuthzTest extends AbstractTest {
 
         assertThat(token).isNotBlank();
 
-        String helloWorldResponseAsString = given()
+        given()
                 .header("Authorization", "Bearer " + new String(Base64.encode(token.getBytes("UTF-8")),
                                                                 "UTF-8"))
-                .then()
-                .statusCode(HttpStatus.OK.value())
                 .when()
                 .get("/token/auth/helloworld")
-                .asString();
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat()
+                .body(equalTo("Hello World"));
 
-        assertThat(helloWorldResponseAsString).isEqualTo("Hello World");
     }
 
 }
