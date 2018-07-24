@@ -120,12 +120,14 @@ public class TokenSampleApplication extends SpringBootServletInitializer {
             @Override
             public void configure(AuthenticationFilter filter) {
                 filter.setIgnoredProcessesUrl("/token/guest/**");
+                filter.setIgnoredProcessesUrl("/token/auth/anonymous");
                 filter.setProcessesUrl("/token/auth/**");
             }
 
             @Override
             public void configure(AuthorizationFilter filter) {
                 filter.setIgnoredProcessesUrl("/token/guest/**");
+                filter.setIgnoredProcessesUrl("/token/auth/anonymous");
                 filter.setProcessesUrl("/token/auth/**");
             }
 
@@ -138,15 +140,15 @@ public class TokenSampleApplication extends SpringBootServletInitializer {
             @Override
             public void configure(UrlAclProviderBuilder builder) {
                 builder.add(UrlAclBuilder.antPathBuilder()
-                                         .url("/token/auth/helloworld")
+                                         .url("/token/auth/helloworld*")
                                          .httpMethods(HttpMethod.GET)
                                          .grantRules("ROLE:DUMMY,USERNAME:testuser"))
                        .add(UrlAclBuilder.antPathBuilder()
-                                         .url("/token/auth/echo1")
+                                         .url("/token/auth/echo1*")
                                          .httpMethods(HttpMethod.POST)
                                          .grantRules("ROLE:DUMMY"))
                        .add(UrlAclBuilder.antPathBuilder()
-                                         .url("/token/auth/echo2")
+                                         .url("/token/auth/echo2*")
                                          .httpMethods(HttpMethod.POST)
                                          .grantRules("USERNAME:testuser"));
             }

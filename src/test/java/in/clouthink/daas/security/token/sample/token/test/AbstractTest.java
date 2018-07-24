@@ -38,10 +38,10 @@ public abstract class AbstractTest {
         RestAssured.port = this.port;
 
         // prepare user
-        SampleUser sampleUser = sampleUserRepository.findByUsername("sampleUser");
+        SampleUser sampleUser = sampleUserRepository.findByUsername("testuser");
         if (sampleUser == null) {
             sampleUser = new SampleUser();
-            sampleUser.setUsername("sampleUser");
+            sampleUser.setUsername("testuser");
             String salt = KeyGeneratorFactory.getInstance().generateHexKey();
             String password = provider.getPasswordDigester("MD5")
                                       .encode("samplePwd", salt);
@@ -59,7 +59,7 @@ public abstract class AbstractTest {
     @After
     public void tearDown() {
         // clean up user
-        SampleUser sampleUser = sampleUserRepository.findByUsername("sampleUser");
+        SampleUser sampleUser = sampleUserRepository.findByUsername("testuser");
         if (sampleUser == null) {
             sampleUserRepository.delete(sampleUser);
         }
